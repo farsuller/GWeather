@@ -52,6 +52,7 @@ data class Main(
 
     @SerialName("sea_level")
     val seaLevel: Int? = null,
+
     val temp: Double? = null,
 
     @SerialName("temp_max")

@@ -1,5 +1,3 @@
-import org.gradle.api.internal.DocumentationRegistry.BASE_URL
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -58,6 +56,7 @@ dependencies {
 
     implementation(libs.androidx.compose.navigation)
 
+    implementation (libs.material.icons.extended)
 
     implementation(libs.kotlinx.serialization.json)
 
@@ -67,6 +66,8 @@ dependencies {
 
     implementation(libs.bundles.bundle.room)
     ksp(libs.androidx.room.compiler)
+
+    implementation(libs.play.services.location)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

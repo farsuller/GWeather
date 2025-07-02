@@ -1,10 +1,15 @@
 package com.solodev.gweatherapp.presentation
 
+
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.solodev.gweatherapp.data.RequestState
+import com.solodev.gweatherapp.domain.model.Location
 import com.solodev.gweatherapp.domain.model.Weather
 import com.solodev.gweatherapp.domain.usecase.WeatherUseCase
+import com.solodev.gweatherapp.presentation.screens.home.GWeatherState
 import kotlinx.coroutines.flow.MutableStateFlow
 
 import kotlinx.coroutines.flow.StateFlow
@@ -19,15 +24,17 @@ class GWeatherViewModel(
     private val weatherUseCase: WeatherUseCase
 ) : ViewModel() {
 
+    private val _location = mutableStateOf<Location?>(null)
+    val location: State<Location?> = _location
+
     private val _weatherState = MutableStateFlow(GWeatherState())
     val weatherState : StateFlow<GWeatherState> = _weatherState.asStateFlow()
 
-    fun requestApi(){
-        getWeather(14.7070,121.1052)
+    fun updateLocation(location: Location) {
+        _location.value = location
     }
 
-
-    private fun getWeather(latitude: Double, longitude: Double) = viewModelScope.launch {
+    fun getWeather(latitude: Double, longitude: Double) = viewModelScope.launch {
         weatherUseCase
             .getWeather(
                 latitude = latitude.toString(),
