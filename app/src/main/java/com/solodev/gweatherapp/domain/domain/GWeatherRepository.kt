@@ -6,4 +6,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface GWeatherRepository {
     fun getWeather(latitude: String, longitude: String): Flow<RequestState<Weather>>
+
+    fun getWeatherHistory(): Flow<List<Weather>>
 }

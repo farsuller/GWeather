@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material.icons.filled.LocationOn
@@ -30,6 +32,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.solodev.gweatherapp.R
+import com.solodev.gweatherapp.presentation.screens.home.component.WeatherHistoryCard
 import com.solodev.gweatherapp.presentation.screens.home.component.WeatherNowCard
 import com.solodev.gweatherapp.util.Tabs
 
@@ -136,6 +140,33 @@ fun GWeatherScreen(
                 }
 
                 Tabs.HISTORY -> {
+                    when {
+                        gWeatherState.weatherHistory != null -> {
+
+                            val weather = gWeatherState.weatherHistory
+
+                            LazyColumn(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(10.dp),
+                            ) {
+                                itemsIndexed(weather) { index, weather ->
+                                    WeatherHistoryCard(
+                                        weatherData = weather,
+                                        iconImage = when(weather.weatherItem?.firstOrNull()?.main) {
+                                            "Clear" -> R.drawable.sun
+                                            "Rain", "Moderate Rain" -> R.drawable.rain
+                                            "Clouds" -> R.drawable.cloudy
+                                            "Partially cloudy" -> R.drawable.sun
+                                            "Thunder" -> R.drawable.thunder
+                                            else -> R.drawable.sun
+                                        },
+                                        isHistory = true,
+                                    )
+                                }
+                            }
+                        }
+                    }
 
                 }
             }

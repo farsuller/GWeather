@@ -61,7 +61,15 @@ class GWeatherViewModel(
                         }
                     }
                 }
+            }
+        getWeathersHistory()
+    }
 
+    fun getWeathersHistory() = viewModelScope.launch {
+        weatherUseCase
+            .getWeathers()
+            .collectLatest { data ->
+                _weatherState.update { it.copy(weatherHistory = data) }
             }
     }
 }
