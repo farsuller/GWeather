@@ -1,9 +1,12 @@
+import org.gradle.api.internal.DocumentationRegistry.BASE_URL
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.devtool.ksp)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.secrets.maps.platform)
 }
 
 android {
@@ -38,6 +41,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
@@ -54,15 +58,11 @@ dependencies {
 
     implementation(libs.androidx.compose.navigation)
 
-    implementation (libs.retrofit)
-    implementation (libs.converter.gson)
-    implementation (libs.logging.interceptor)
 
     implementation(libs.kotlinx.serialization.json)
 
-    implementation(libs.koin.android)
-    implementation(libs.koin.androidx.compose)
-
+    implementation(libs.bundles.ktor)
+    implementation(libs.bundles.koin)
     implementation(libs.bundles.bundle.coil)
 
     implementation(libs.bundles.bundle.room)
@@ -75,4 +75,9 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+}
+
+
+secrets {
+    propertiesFileName = "secrets.properties"
 }
